@@ -86,7 +86,7 @@ export default function Dashboard() {
           <div className="flex gap-2">
             <button onClick={() => router.push('/nuova')} className="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-2 rounded-xl font-medium">+ Nuova</button>
             <button onClick={() => router.push('/profilo')} className="bg-gray-100 text-gray-700 text-xs px-3 py-2 rounded-xl font-medium border border-gray-200">🏪</button>
-            <button onClick={logout} className="text-gray-500 text-xs px-3 py-2 rounded-xl border border-gray-200">Esci</button>
+            <button onClick={logout} className="text-gray-500 text-xs px-3 py-2 rounded-xl border border-gray-200">Esci</button><button onClick={() => router.push('/tavoli')} className="bg-gray-100 text-gray-700 text-xs px-3 py-2 rounded-xl font-medium border border-gray-200">🪑</button>
           </div>
         </div>
       </div>
