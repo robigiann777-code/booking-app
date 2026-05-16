@@ -10,6 +10,7 @@ export default function Tavoli() {
   const [nome, setNome] = useState('')
   const [posti, setPosti] = useState('4')
   const [aggiunta, setAggiunta] = useState(false)
+  const [confermaElimina, setConfermaElimina] = useState<{id: string, nome: string} | null>(null)
   const router = useRouter()
 
   const oggi = new Date().toISOString().split('T')[0]
@@ -49,12 +50,11 @@ export default function Tavoli() {
     fetchTavoli()
   }
 
-  const eliminaTavolo = async (id: string, nome: string) => {
-    const conferma = window.confirm(`Sei sicuro di voler eliminare "${nome}"?`)
-    if (conferma) {
-      await supabase.from('tavoli').delete().eq('id', id)
-      fetchTavoli()
-    }
+  const eliminaTavolo = async () => {
+    if (!confermaElimina) return
+    await supabase.from('tavoli').delete().eq('id', confermaElimina.id)
+    setConfermaElimina(null)
+    fetchTavoli()
   }
 
   const tavoloOccupato = (tavoloId: string) => {
@@ -63,6 +63,27 @@ export default function Tavoli() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+
+      {/* Popup conferma eliminazione */}
+      {confermaElimina && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-xl">
+            <p className="text-gray-800 font-bold text-lg mb-2">Elimina tavolo</p>
+            <p className="text-gray-500 text-sm mb-6">Sei sicuro di voler eliminare <b>"{confermaElimina.nome}"</b>?</p>
+            <div className="flex gap-3">
+              <button onClick={() => setConfermaElimina(null)}
+                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 rounded-xl">
+                Annulla
+              </button>
+              <button onClick={eliminaTavolo}
+                className="flex-1 bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-xl">
+                Elimina
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="bg-white border-b border-gray-200 px-4 py-3 shadow-sm">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
@@ -75,7 +96,6 @@ export default function Tavoli() {
 
       <div className="p-4 max-w-2xl mx-auto">
 
-        {/* Aggiungi tavolo */}
         <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-4 mb-4">
           <h2 className="font-bold text-gray-800 mb-3">➕ Aggiungi tavolo</h2>
           <div className="flex gap-2">
@@ -95,7 +115,6 @@ export default function Tavoli() {
           </div>
         </div>
 
-        {/* Lista tavoli */}
         <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
           <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
             <h2 className="font-bold text-gray-800 text-sm">I tuoi tavoli ({tavoli.length})</h2>
@@ -108,7 +127,7 @@ export default function Tavoli() {
           {loading ? (
             <p className="text-gray-400 text-center py-8 text-sm">Caricamento...</p>
           ) : tavoli.length === 0 ? (
-            <p className="text-gray-400 text-center py-8 text-sm">Nessun tavolo ancora — aggiungine uno!</p>
+            <p className="text-gray-400 text-center py-8 text-sm">Nessun tavolo ancora</p>
           ) : (
             <div className="grid grid-cols-2 gap-3 p-4">
               {tavoli.map(t => {
@@ -126,7 +145,7 @@ export default function Tavoli() {
                         occupato ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'
                       }`}>{occupato ? 'Occupato' : 'Libero'}</span>
                     </div>
-                    <button onClick={() => eliminaTavolo(t.id, t.nome)}
+                    <button onClick={() => setConfermaElimina({id: t.id, nome: t.nome})}
                       className="text-xs text-red-400 hover:text-red-600 text-left mt-1 border border-red-200 rounded-lg px-2 py-1 hover:bg-red-50 transition-colors">
                       🗑 Elimina
                     </button>
