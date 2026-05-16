@@ -76,7 +76,6 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900">
-      {/* Header mobile-friendly */}
       <div className="bg-white border-b border-gray-200 px-4 py-3 shadow-sm">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
@@ -84,16 +83,15 @@ export default function Dashboard() {
             <h1 className="text-base font-bold text-gray-800">Prenotazioni</h1>
           </div>
           <div className="flex gap-2">
-            <<button onClick={() => router.push('/nuova')} className="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-2 rounded-xl font-medium">+ Nuova</button>
-<button onClick={() => router.push('/profilo')} className="bg-gray-100 text-gray-700 text-xs px-3 py-2 rounded-xl font-medium border border-gray-200">🏪</button>
-<button onClick={() => router.push('/tavoli')} className="bg-gray-100 text-gray-700 text-xs px-3 py-2 rounded-xl font-medium border border-gray-200">🪑</button>
-<button onClick={logout} className="text-gray-500 text-xs px-3 py-2 rounded-xl border border-gray-200">Esci</button>
+            <button onClick={() => router.push('/nuova')} className="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-2 rounded-xl font-medium">+ Nuova</button>
+            <button onClick={() => router.push('/profilo')} className="bg-gray-100 text-gray-700 text-xs px-3 py-2 rounded-xl font-medium border border-gray-200">🏪</button>
+            <button onClick={() => router.push('/tavoli')} className="bg-gray-100 text-gray-700 text-xs px-3 py-2 rounded-xl font-medium border border-gray-200">🪑</button>
+            <button onClick={logout} className="text-gray-500 text-xs px-3 py-2 rounded-xl border border-gray-200">Esci</button>
           </div>
         </div>
       </div>
 
       <div className="p-4 max-w-2xl mx-auto">
-        {/* Selettore giorno */}
         <div className="flex items-center gap-2 mb-4 bg-white rounded-xl p-3 border border-gray-200 shadow-sm">
           <button onClick={() => {
             const d = new Date(giornoSelezionato)
@@ -112,7 +110,6 @@ export default function Dashboard() {
             className="bg-blue-600 text-white text-xs px-3 py-2 rounded-lg font-medium">Oggi</button>
         </div>
 
-        {/* Stats */}
         <div className="grid grid-cols-3 gap-2 mb-4">
           <div className="bg-white rounded-xl p-3 border border-gray-200 shadow-sm text-center">
             <p className="text-gray-500 text-xs">Totale</p>
@@ -128,7 +125,6 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Pranzo */}
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden mb-4">
           <div className="px-4 py-3 border-b border-orange-100 bg-orange-50 flex items-center gap-2">
             <span>☀️</span>
@@ -142,7 +138,6 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Cena */}
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
           <div className="px-4 py-3 border-b border-blue-100 bg-blue-50 flex items-center gap-2">
             <span>🌙</span>
