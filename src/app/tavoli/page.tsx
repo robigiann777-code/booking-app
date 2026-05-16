@@ -49,9 +49,12 @@ export default function Tavoli() {
     fetchTavoli()
   }
 
-  const eliminaTavolo = async (id: string) => {
-    await supabase.from('tavoli').delete().eq('id', id)
-    fetchTavoli()
+  const eliminaTavolo = async (id: string, nome: string) => {
+    const conferma = window.confirm(`Sei sicuro di voler eliminare "${nome}"?`)
+    if (conferma) {
+      await supabase.from('tavoli').delete().eq('id', id)
+      fetchTavoli()
+    }
   }
 
   const tavoloOccupato = (tavoloId: string) => {
@@ -123,8 +126,8 @@ export default function Tavoli() {
                         occupato ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'
                       }`}>{occupato ? 'Occupato' : 'Libero'}</span>
                     </div>
-                    <button onClick={() => eliminaTavolo(t.id)}
-                      className="text-xs text-red-400 hover:text-red-600 text-left">
+                    <button onClick={() => eliminaTavolo(t.id, t.nome)}
+                      className="text-xs text-red-400 hover:text-red-600 text-left mt-1 border border-red-200 rounded-lg px-2 py-1 hover:bg-red-50 transition-colors">
                       🗑 Elimina
                     </button>
                   </div>
